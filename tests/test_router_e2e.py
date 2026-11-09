@@ -38,12 +38,23 @@ def test_all_providers_fail_raises() -> None:
         ModelRouter(providers=providers).route("What is 2 + 2?")
 
 
-def test_benchmark_meets_headline_target() -> None:
+def test_benchmark_metrics_are_measured_not_constants() -> None:
+    """Replaces the 0.1.0 headline test, which asserted a saving/quality
+    pair read from constants in the routing table (circular). The 0.1.1
+    benchmark scores real response text against golden answers; this
+    test asserts the mechanics — routed spend beats the all-premium
+    baseline and quality is a genuine measurement (premium = full
+    answers, routed < premium because one case is under-routed)."""
+    from cost_aware_router.bench import run_benchmark as run_full
+
+    report = run_full()
+    assert report.cases == 18
+    assert 0 < report.routed_spend_usd < report.baseline_spend_usd
+    assert report.premium_quality == 1.0
+    assert 0.9 < report.routed_quality < report.premium_quality
+    assert report.quality_drop_pct > 0
     router = run_benchmark(ModelRouter())
-    t = router.tracker
-    assert t.saving_pct >= 50.0
-    drop = 100 * (0.97 - t.avg_quality) / 0.97
-    assert drop < 2.0
+    assert router.tracker.requests == 18  # unique traffic, no repeats
 
 
 def test_e2e_cli(capsys) -> None:  # type: ignore[no-untyped-def]

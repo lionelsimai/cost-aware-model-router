@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cost-aware-model-router"
-version = "0.1.0"
-description = "Routes prompts by complexity with caching and fallbacks — target -50% spend, under 2% quality drop."
+version = "0.1.1"
+description = "Routes prompts by complexity with caching, fallbacks and a measured quality gate — benchmarks score real response text against golden answers."
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
