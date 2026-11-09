@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cost-aware-model-router"
+version = "0.1.0"
+description = "Routes prompts by complexity with caching and fallbacks — target -50% spend, under 2% quality drop."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Lionel Sim", email = "lionel@theaicapitol.com" }]
+keywords = ["llm", "router", "cost-optimisation", "caching", "agents"]
+classifiers = ["Programming Language :: Python :: 3", "License :: OSI Approved :: MIT License"]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/lionelsimai/cost-aware-model-router"
+Repository = "https://github.com/lionelsimai/cost-aware-model-router"
+Issues = "https://github.com/lionelsimai/cost-aware-model-router/issues"
+
+[project.scripts]
+model-router = "cost_aware_router.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
